@@ -33,7 +33,7 @@ Many use a same package and module name, you could definitely do that. But this 
 
 Open `example_pypi_package` folder with Visual Studio Code, <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> (Windows / Linux) or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> (MacOS) to find all occurrences of both names and replace them with your package and module's names. Also remember to change the name of the folder **src/examplepy**.
 
-Simply and very roughly speaking, package name is used in `pip install <PACKAGENAME>` and module name is used in `import <MODULENAME>`. Both names should consist of lowercase basic letters (a-z). They may have underscores (`_`) if you really need them. Hyphen-minus (`-`) should not be used.
+> Simply and very roughly speaking, package name is used in `pip install <PACKAGENAME>` and module name is used in `import <MODULENAME>`. Both names should consist of lowercase basic letters (a-z). They may have underscores (`_`) if you really need them. Hyphen-minus (`-`) should not be used.
 
 You'll also need to make sure the URL "https://pypi.org/project/example-pypi-package/" (replace `example-pypi-package` by your package name, with all `_` becoming `-`) is not occupied.
 
@@ -189,7 +189,7 @@ If you want to modify the description / README of your package on pypi.org, you 
 
 <details><summary><strong>If you publish your package to PyPI manually, click to read</strong></summary>
 
-### Install Twine
+## Install using Twine
 
 Install or upgrade Twine:
 
@@ -203,6 +203,14 @@ Create a **.pypirc** file in your **$HOME** (**~**) directory, its content shoul
 [pypi]
 username = __token__
 password = <PyPI token>
+
+[distutils]
+index-servers =
+    pomini-stable
+
+[pomini-stable]
+repository = http://localhost:3141/pomini/stable/
+username = pomini
 ```
 
 (Use `[testpypi]` instead of `[pypi]` if you are uploading to [TestPyPI](https://test.pypi.org/))
@@ -213,10 +221,12 @@ Replace `<PyPI token>` with your real PyPI token (which starts with `pypi-`).
 
 ### Upload
 
+https://dev.to/cwprogram/private-python-packages-with-devpi-3iai
+
 Run Twine to upload all of the archives under **dist** folder:
 
 ```bash
-python -m twine upload --repository pypi dist/*
+(venv) D:\_POMINI\labs\example_pypi_package>twine upload -r pomini-stable dist\*
 ```
 
 (use `testpypi` instead of `pypi` if you are uploading to [TestPyPI](https://test.pypi.org/))
@@ -244,6 +254,13 @@ python -m twine upload --repository pypi dist/*
 (use `testpypi` instead of `pypi` if needed)
 
 </details>
+
+### Get package from private devpy registry
+
+```
+pip install -i http://localhost:3141/pomini/pypi/+simple/ -U pip
+```
+
 
 ## References
 
