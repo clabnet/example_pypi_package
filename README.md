@@ -122,7 +122,7 @@ tox -e py39
 
 If you add more files to the root directory (**example_pypi_package/**), you'll need to add your file to `check-manifest --ignore` list in **tox.ini**.
 
-<details><summary><strong>Thanks to GitHub Actions' automated process, you don't need to generate distribution files locally. But if you insist, click to read the "Generate distribution files" section</strong></summary>
+<strong>Thanks to GitHub Actions' automated process, you don't need to generate distribution files locally</strong>
 
 ## Generate distribution files
 
@@ -131,7 +131,10 @@ If you add more files to the root directory (**example_pypi_package/**), you'll 
 Install or upgrade `setuptools` and `wheel`:
 
 ```bash
-python -m pip install --user --upgrade setuptools wheel
+python -m pip install --upgrade setuptools wheel
+OR
+python3 -m pip install --upgrade setuptools wheel
+
 ```
 
 (If `python3` is the command on your machine, change `python` to `python3` in the above command, or add a line `alias python=python3` to **~/.bashrc** or **~/.bash_aliases** file if you use bash on Linux)
@@ -141,7 +144,7 @@ python -m pip install --user --upgrade setuptools wheel
 From `example_pypi_package` directory, run the following command, in order to generate production version for source distribution (sdist) in `dist` folder:
 
 ```bash
-python setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel
 ```
 
 ### Install locally
@@ -186,8 +189,6 @@ The example package has automated tests and upload (publishing) already set up w
 After your package is published on PyPI, go to [https://pypi.org/project/example-pypi-package/](https://pypi.org/project/example-pypi-package/) (`_` becomes `-`). Copy the command on the page, execute it to download and install your package from PyPI. (or test.pypi.org if you use that)
 
 If you want to modify the description / README of your package on pypi.org, you have to publish a new version.
-
-<details><summary><strong>If you publish your package to PyPI manually, click to read</strong></summary>
 
 ## Install using Twine
 
@@ -238,11 +239,14 @@ When you finished developing a newer version of your package, do the following t
 Modify the version number `__version__` in **src\examplepy\_\_init\_\_.py**.
 
 Delete all old versions in **dist**.
+```
+rimraf **/dist --glob
+```
 
 Run the following command again to regenerate **dist**:
 
 ```bash
-python setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel
 ```
 
 Run the following command again to upload **dist**:
